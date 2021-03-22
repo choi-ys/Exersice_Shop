@@ -1,5 +1,6 @@
 package io.exercise.shop.repository;
 
+import io.exercise.shop.domain.entity.Address;
 import io.exercise.shop.domain.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,13 @@ class MemberRepositoryTest {
                 .memberName(memberName)
                 .build();
 
+        Address address =  new Address("서울특별시", "강남구 테헤란로 325", "06151");
+        member.setAddress(address);
+
         // When
         this.memberRepository.create(member);
 
         // Then
-        assertEquals(member, memberRepository.find(member.getMemberNo()));
+        assertEquals(member, memberRepository.findByMemberNo(member.getMemberNo()));
     }
 }
