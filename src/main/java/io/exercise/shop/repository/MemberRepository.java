@@ -22,19 +22,48 @@ public class MemberRepository {
      */
     private final EntityManager entityManager;
 
+    /**
+     * EntityManager를 이용한 객체의 영속상태 변경 : 비영속 -> 영속
+     * 해당 EntityManager의 Transaction commit 시점에 쓰기 지연 저장소에 등록된 DML이 실행 되면서 영속화 된 객체가 DB에 저장
+     * @param member     */
     public void create(Member member){
         entityManager.persist(member);
     }
 
-    public Member find(long memberNo){
+    /**
+     * PK를 이용한 특정 회원 조회
+     * @param memberNo
+     * @return
+     */
+    public Member findByMemberNo(long memberNo){
         return entityManager.find(Member.class, memberNo);
     }
 
+    /**
+     * 회원 Entity를 이용한 특정 회원 삭제
+     * @param member
+     */
     public void delete(Member member){
         entityManager.remove(member);
     }
 
-    public List<Member> findMemberList(){
-        return entityManager.createQuery("select member from Member as member").getResultList();
+    /** JQPL
+     * 회원 목록 조회
+     * @return
+     */
+    public List<Member> findAll(){
+        return entityManager.createQuery("select member from Member as member", Member.class)
+                .getResultList();
+    }
+
+    /** 파라미터 바인딩 JPQL
+     * 특정 회원 이름을 가진 회원 목록 조회
+     * @param memberName
+     * @return
+     */
+    public List<Member> findByMemberName(String memberName){
+        return entityManager.createQuery("select member from Member as member where member.memberName = :memberName", Member.class)
+                .setParameter("memberName", memberName)
+                .getResultList();
     }
 }

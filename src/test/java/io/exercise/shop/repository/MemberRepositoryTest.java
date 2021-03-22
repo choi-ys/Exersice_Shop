@@ -38,6 +38,6 @@ class MemberRepositoryTest {
         this.memberRepository.create(member);
 
         // Then
-        assertEquals(member, memberRepository.find(member.getMemberNo()));
+        assertEquals(member, memberRepository.findByMemberNo(member.getMemberNo()));
     }
 }
