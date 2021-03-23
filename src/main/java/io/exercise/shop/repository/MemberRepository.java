@@ -26,7 +26,7 @@ public class MemberRepository {
      * EntityManager를 이용한 객체의 영속상태 변경 : 비영속 -> 영속
      * 해당 EntityManager의 Transaction commit 시점에 쓰기 지연 저장소에 등록된 DML이 실행 되면서 영속화 된 객체가 DB에 저장
      * @param member     */
-    public void create(Member member){
+    public void save(Member member){
         entityManager.persist(member);
     }
 
@@ -52,7 +52,7 @@ public class MemberRepository {
      * @return
      */
     public List<Member> findAll(){
-        return entityManager.createQuery("select member from Member as member", Member.class)
+        return entityManager.createQuery("select m from Member as m", Member.class)
                 .getResultList();
     }
 
@@ -62,7 +62,7 @@ public class MemberRepository {
      * @return
      */
     public List<Member> findByMemberName(String memberName){
-        return entityManager.createQuery("select member from Member as member where member.memberName = :memberName", Member.class)
+        return entityManager.createQuery("select m from Member as m where m.memberName = :memberName", Member.class)
                 .setParameter("memberName", memberName)
                 .getResultList();
     }
