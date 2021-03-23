@@ -1,5 +1,6 @@
 package io.exercise.shop.domain.entity.item;
 
+import io.exercise.shop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,4 +30,18 @@ public abstract class Item {
     private int itemPrice;
 
     private int stockQuantity;
+
+    // stock(재고) 증가
+    public void addStockCount(int quantity){
+        this.stockQuantity += quantity;
+    }
+
+    // stock(재고) 감소
+    public void removeStockCount(int quantity){
+        int restStock = this.stockQuantity - quantity;
+        if(restStock < 0){
+            throw new NotEnoughStockException("재고가 부족합니다.");
+        }
+        this.stockQuantity = restStock;
+    }
 }
