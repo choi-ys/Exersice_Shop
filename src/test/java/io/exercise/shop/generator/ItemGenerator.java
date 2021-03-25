@@ -21,12 +21,6 @@ public class ItemGenerator {
         String author = "김영한";
         String isbn = "9788960777330";
 
-        Book book = new Book();
-        book.setItemName(itemName);
-        book.setItemPrice(itemPrice);
-        book.setStockQuantity(stockCount);
-        book.setAuthor(author);
-        book.setIsbn(isbn);
-        return book;
+        return Item.createBook(itemName, itemPrice, stockCount, author, isbn);
     }
 }

@@ -18,6 +18,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ItemTest {
 
     @Test
+    @DisplayName("상품 생성")
+    public void createBook(){
+        // Given
+        String itemName = "자바 ORM 표준 JPA 프로그래밍";
+        int itemPrice = 43000;
+        int stockCount = 100;
+        String author = "김영한";
+        String isbn = "9788960777330";
+
+        // When
+        Book book = Item.createBook(itemName, itemPrice, stockCount, author, isbn);
+
+        // Then
+        assertEquals(book.getItemName(), itemName);
+        assertEquals(book.getItemPrice(), itemPrice);
+        assertEquals(book.getStockQuantity(), stockCount);
+        assertEquals(book.getAuthor(), author);
+        assertEquals(book.getIsbn(), isbn);
+    }
+
+    @Test
     @DisplayName("재고 증가")
     public void addStockCount(){
         // Given

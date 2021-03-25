@@ -20,7 +20,7 @@ public abstract class Item {
 
     @Id @GeneratedValue
     @Column(name = "item_no")
-    private Long No;
+    private Long itemNo;
 
     @ManyToMany(mappedBy = "itemList", fetch = FetchType.LAZY)
     private List<Category> categoryList = new ArrayList<>();
@@ -30,6 +30,17 @@ public abstract class Item {
     private int itemPrice;
 
     private int stockQuantity;
+
+    // 도서 상품 생성
+    public static Book createBook(String itemName, int itemPrice, int stockQuantity, String author, String isbn){
+        Book book = new Book();
+        book.setItemName(itemName);
+        book.setItemPrice(itemPrice);
+        book.setStockQuantity(stockQuantity);
+        book.setAuthor(author);
+        book.setIsbn(isbn);
+        return book;
+    }
 
     // stock(재고) 증가
     public void addStockCount(int quantity){
