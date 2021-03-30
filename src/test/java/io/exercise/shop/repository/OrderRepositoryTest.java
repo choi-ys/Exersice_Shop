@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -53,7 +54,7 @@ class OrderRepositoryTest {
     OrderRepository orderRepository;
 
     @Test
-    @DisplayName("신규 주문 생성")
+    @DisplayName("신규 주문 생성 및 조회")
 //    @Rollback(value = false)
     public void save(){
         // Given : 회원 생성
@@ -94,5 +95,8 @@ class OrderRepositoryTest {
 
         // Then : 주문 생성 시, 주문 수량에 따른 상품 재고 감소 여부 확인
         assertEquals(item.getStockQuantity() + orderCount, beforeStockCount);
+
+        Order createdOrder = orderRepository.findByOrderNo(order.getOrderNo());
+        assertEquals(createdOrder, order);
     }
 }
