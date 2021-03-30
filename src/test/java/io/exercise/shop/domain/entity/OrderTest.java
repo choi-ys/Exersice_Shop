@@ -20,6 +20,7 @@ class OrderTest {
 
     @Test
     @DisplayName("신규 주문 생성")
+//    @Rollback(value = false)
     public void createOrder(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();
@@ -59,6 +60,7 @@ class OrderTest {
 
     @Test
     @DisplayName("주문 취소")
+//    @Rollback(value = false)
     public void cancel(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();
@@ -96,6 +98,7 @@ class OrderTest {
 
     @Test
     @DisplayName("주문 취소 : 배송 완료의 주문 취소 예외")
+//    @Rollback(value = false)
     public void orderCancel_ComplateOrder(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();

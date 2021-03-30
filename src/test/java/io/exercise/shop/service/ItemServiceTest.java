@@ -41,7 +41,7 @@ class ItemServiceTest {
 
     @Test
     @DisplayName("상품 생성")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void saveItem(){
         // Given
         Item newItem = itemGenerator.buildBook();
@@ -55,7 +55,7 @@ class ItemServiceTest {
 
     @Test
     @DisplayName("상품 조회")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void findItem(){
         // Given
         Item newItem = itemGenerator.buildBook();
@@ -72,7 +72,7 @@ class ItemServiceTest {
 
     @Test
     @DisplayName("상품 수정")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void mergeItem(){
         // Given
         Item newItem = itemGenerator.buildBook();
@@ -116,7 +116,7 @@ class ItemServiceTest {
 
     @Test
     @DisplayName("상품 삭제")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void deleteItem(){
         // Given
         Item newItem = itemGenerator.buildBook();

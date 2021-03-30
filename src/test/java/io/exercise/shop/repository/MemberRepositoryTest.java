@@ -41,7 +41,7 @@ class MemberRepositoryTest {
 
     @Test
     @DisplayName("Insert:Member")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void create(){
         // Given
         Member member = this.memberGenerator.buildMember();
@@ -55,8 +55,7 @@ class MemberRepositoryTest {
 
     @Test
     @DisplayName("Select:Member")
-    @Rollback(value = false)
-    @Transactional(readOnly = true)
+//    @Rollback(value = false)
     public void findByMemberNo(){
         // Given
         Member member = this.memberGenerator.buildMember();
@@ -88,7 +87,7 @@ class MemberRepositoryTest {
 
     @Test
     @DisplayName("Delete:Member")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void newTest(){
         // Given
         Member member = this.memberGenerator.buildMember();
@@ -103,7 +102,7 @@ class MemberRepositoryTest {
 
     @Test
     @DisplayName("Select:MemberList")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void findAll(){
         // Given
         Member firstMember = this.memberGenerator.buildMemberByMemberName("최용석");

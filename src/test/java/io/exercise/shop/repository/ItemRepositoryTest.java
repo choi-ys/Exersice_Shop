@@ -39,7 +39,7 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품 저장")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void save(){
         // Given
         String itemName = "자바 ORM 표준 JPA 프로그래밍";
@@ -84,7 +84,7 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품 수정")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void mergeItem(){
         // Given
         Item newItem = itemGenerator.buildBook();
@@ -133,7 +133,7 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품 삭제")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void remove(){
         // Given
         Item newItem = itemGenerator.buildBook();

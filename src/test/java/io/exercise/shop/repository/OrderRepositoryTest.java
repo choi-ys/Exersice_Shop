@@ -54,7 +54,7 @@ class OrderRepositoryTest {
 
     @Test
     @DisplayName("신규 주문 생성")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void save(){
         // Given : 회원 생성
         Member member = memberGenerator.buildMember();

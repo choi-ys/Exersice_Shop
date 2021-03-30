@@ -17,6 +17,7 @@ class OrderItemTest {
 
     @Test
     @DisplayName("주문 상품 생성")
+//    @Rollback(value = false)
     public void createOrderItem(){
         // Given
         Item item = new ItemGenerator().buildBook();
@@ -35,6 +36,7 @@ class OrderItemTest {
 
     @Test
     @DisplayName("주문 취소")
+//    @Rollback(value = false)
     public void cancel(){
         // Given
         Item item = new ItemGenerator().buildBook();
