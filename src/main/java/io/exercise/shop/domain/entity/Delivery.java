@@ -12,8 +12,7 @@ import static javax.persistence.FetchType.LAZY;
  * @Content : 배송지 정보를 표현하는 Entity, delivery_tb 테이블과 매핑
  */
 @Entity @Table(name = "delivery_tb")
-@Getter @Setter
-@Builder @NoArgsConstructor @AllArgsConstructor
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
     @Id @GeneratedValue
@@ -28,4 +27,38 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
+
+
+    // * --------------------------------------------------------------
+    // * Header : 도메인 생성
+    // * @author : choi-ys
+    // * @date : 2021/03/30 6:03 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 배송정보 생성
+     * @apiNote 도메인 생성
+     * @param address 배송 주소지 정보
+     */
+    @Builder
+    public Delivery(Address address) {
+        this.address = address;
+        this.deliveryStatus = DeliveryStatus.READY;
+    }
+
+
+    // * --------------------------------------------------------------
+    // * Header : 양방향 연관관계 객체의 값 설정
+    // * @author : choi-ys
+    // * @date : 2021/03/30 8:51 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 배송지에 해당하는 주문 정보 설정
+     * @apiNote 양방향 연관관계 객체의 값 설정
+     * @param order 배송지의 주문정보
+     */
+    protected void mappingOrder(Order order){
+        this.order = order;
+    }
 }

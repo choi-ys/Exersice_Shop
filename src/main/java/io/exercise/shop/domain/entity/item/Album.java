@@ -1,7 +1,8 @@
 package io.exercise.shop.domain.entity.item;
 
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Entity;
  * @Content : 상품의 공통 항목을 표현하는 Item Entity를 상속받아 음반 상품을 표현하는 Entity
  */
 @Entity @DiscriminatorValue("A")
-@Getter @Setter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Album extends Item{
 
     private String artist;

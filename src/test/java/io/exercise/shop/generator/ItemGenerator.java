@@ -10,17 +10,19 @@ import io.exercise.shop.domain.entity.item.Item;
  */
 public class ItemGenerator {
 
-    public Item createNewItem(){
-        return makeBookEntity();
-    }
-
-    private Item makeBookEntity(){
+    public Item BuildBook(){
         String itemName = "자바 ORM 표준 JPA 프로그래밍";
         int itemPrice = 43000;
-        int stockCount = 100;
+        int stockQuantity = 100;
         String author = "김영한";
         String isbn = "9788960777330";
 
-        return Item.createBook(itemName, itemPrice, stockCount, author, isbn);
+        return Book.builder()
+                .itemName(itemName)
+                .itemPrice(itemPrice)
+                .stockQuantity(stockQuantity)
+                .author(author)
+                .isbn(isbn)
+                .build();
     }
 }
