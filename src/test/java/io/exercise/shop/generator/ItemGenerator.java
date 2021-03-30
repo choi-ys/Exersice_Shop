@@ -10,7 +10,7 @@ import io.exercise.shop.domain.entity.item.Item;
  */
 public class ItemGenerator {
 
-    public Item BuildBook(){
+    public Item buildBook(){
         String itemName = "자바 ORM 표준 JPA 프로그래밍";
         int itemPrice = 43000;
         int stockQuantity = 100;

@@ -79,4 +79,29 @@ public abstract class Item {
         }
         this.stockQuantity = restStock;
     }
+
+
+    /**
+     * 상품 명 수정
+     * @apiNote 비즈니스 로직
+     */
+    public void changeItemName(String itemName){
+        this.itemName = itemName;
+    }
+
+    /**
+     * 상품 가격 수정
+     * @apiNote 비즈니스 로직
+     */
+    public void changeItemPrice(int itemPrice){
+        this.itemPrice = itemPrice;
+    }
+
+    /**
+     * 상품 재고 수정
+     * @apiNote 비즈니스 로직
+     */
+    public void changeStockQuantity(int stockQuantity){
+        this.stockQuantity = stockQuantity;
+    }
 }

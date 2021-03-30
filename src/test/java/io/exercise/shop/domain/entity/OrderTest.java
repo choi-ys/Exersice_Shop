@@ -20,6 +20,7 @@ class OrderTest {
 
     @Test
     @DisplayName("신규 주문 생성")
+//    @Rollback(value = false)
     public void createOrder(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();
@@ -28,7 +29,7 @@ class OrderTest {
         Delivery delivery = new DeliveryGenerator().buildDelivery();
 
         // Given : 상품 정보
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int beforeStockCount = item.getStockQuantity(); // 주문전 상품 재고
         int orderCount = 2; // 주문 수량
 
@@ -54,11 +55,12 @@ class OrderTest {
         assertEquals(orderItem.getOrder(), order);
 
         // Then : 주문 생성 시, 주문 수량만큼 상품의 재고 감소 여부 확인
-        assertEquals(item.getStockQuantity()+orderCount, beforeStockCount);
+        assertEquals(item.getStockQuantity() + orderCount, beforeStockCount);
     }
 
     @Test
     @DisplayName("주문 취소")
+//    @Rollback(value = false)
     public void cancel(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();
@@ -67,7 +69,7 @@ class OrderTest {
         Delivery delivery = new DeliveryGenerator().buildDelivery();
 
         // Given : 상품 정보
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int beforeStockCount = item.getStockQuantity(); // 주문전 상품 재고
         int orderCount = 2; // 주문 수량
 
@@ -96,6 +98,7 @@ class OrderTest {
 
     @Test
     @DisplayName("주문 취소 : 배송 완료의 주문 취소 예외")
+//    @Rollback(value = false)
     public void orderCancel_ComplateOrder(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();
@@ -104,7 +107,7 @@ class OrderTest {
         Delivery delivery = new DeliveryGenerator().buildDelivery();
 
         // Given : 상품 정보
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int beforeStockCount = item.getStockQuantity(); // 주문전 상품 재고
         int orderCount = 2; // 주문 수량
 

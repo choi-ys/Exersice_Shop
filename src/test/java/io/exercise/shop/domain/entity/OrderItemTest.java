@@ -17,9 +17,10 @@ class OrderItemTest {
 
     @Test
     @DisplayName("주문 상품 생성")
+//    @Rollback(value = false)
     public void createOrderItem(){
         // Given
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int orderCount = 2;
         // When
         OrderItem orderItem = OrderItem.builder()
@@ -35,9 +36,10 @@ class OrderItemTest {
 
     @Test
     @DisplayName("주문 취소")
+//    @Rollback(value = false)
     public void cancel(){
         // Given
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int beforeStockCount = item.getStockQuantity();
         int orderCount = 2;
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -41,6 +42,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원 가입")
+//    @Rollback(value = false)
     public void join(){
         // Given
         Member member = memberGenerator.buildMember();
@@ -54,6 +56,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원 가입 중복 검사 예외 처리")
+//    @Rollback(value = false)
     public void duplicatedMemberJoin(){
         // Given
         Member member = memberGenerator.buildMember();
