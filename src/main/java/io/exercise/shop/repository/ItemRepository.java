@@ -31,7 +31,6 @@ public class ItemRepository {
             // 기존 상품 수정 : merge로 동작하므로 설정되지 않은 항목이 null로 갱신될 가능성이 있음.
             entityManager.merge(item);
         }
-
     }
 
     /**
