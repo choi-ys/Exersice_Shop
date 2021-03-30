@@ -44,19 +44,25 @@ class ItemRepositoryTest {
         // Given
         String itemName = "자바 ORM 표준 JPA 프로그래밍";
         int itemPrice = 43000;
-        int stockCount = 100;
+        int stockQuantity = 100;
         String author = "김영한";
         String isbn = "9788960777330";
 
         // When
-        Book book = Item.createBook(itemName, itemPrice, stockCount, author, isbn);
+        Book book = Book.builder()
+                .itemName(itemName)
+                .itemPrice(itemPrice)
+                .stockQuantity(stockQuantity)
+                .author(author)
+                .isbn(isbn)
+                .build();
         itemRepository.save(book);
 
         // Then
         assertThat(book.getItemNo()).isNotZero();
         assertEquals(book.getItemName(), itemName);
         assertEquals(book.getItemPrice(), itemPrice);
-        assertEquals(book.getStockQuantity(), stockCount);
+        assertEquals(book.getStockQuantity(), stockQuantity);
         assertEquals(book.getAuthor(), author);
         assertEquals(book.getIsbn(), isbn);
     }
@@ -65,7 +71,7 @@ class ItemRepositoryTest {
     @DisplayName("특정 상품 조회")
     public void findByItemNo(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.BuildBook();
         itemRepository.save(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
@@ -103,9 +109,9 @@ class ItemRepositoryTest {
     @DisplayName("상품 목록 조회")
     public void findAll(){
         // Given
-        Item firstItem = itemGenerator.createNewItem();
-        Item secondItem = itemGenerator.createNewItem();
-        Item thirdItem = itemGenerator.createNewItem();
+        Item firstItem = itemGenerator.BuildBook();
+        Item secondItem = itemGenerator.BuildBook();
+        Item thirdItem = itemGenerator.BuildBook();
         itemRepository.save(firstItem);
         itemRepository.save(secondItem);
         itemRepository.save(thirdItem);
@@ -129,7 +135,7 @@ class ItemRepositoryTest {
     @Rollback(value = false)
     public void remove(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.BuildBook();
         itemRepository.save(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 

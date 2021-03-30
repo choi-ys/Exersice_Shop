@@ -6,5 +6,6 @@ package io.exercise.shop.domain.entity;
  * @Content : 주문 상태를 표현하는 Enum 타입
  */
 public enum OrderStatus {
-    ORDER, CANCEL
+    ORDER, // 신규
+    CANCEL // 취소
 }

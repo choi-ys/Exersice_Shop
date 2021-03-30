@@ -26,4 +26,5 @@ public class MemberGenerator {
                 .address(address)
                 .build();
     }
+
 }

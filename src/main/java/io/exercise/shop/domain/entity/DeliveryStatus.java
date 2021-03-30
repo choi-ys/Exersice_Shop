@@ -6,5 +6,6 @@ package io.exercise.shop.domain.entity;
  * @Content : 배송 상태를 표현하는 Enum 타입
  */
 public enum DeliveryStatus {
-    READY, COMP
+    READY,  // 준비
+    COMPLETE // 완료
 }

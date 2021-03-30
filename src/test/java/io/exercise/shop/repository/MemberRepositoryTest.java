@@ -78,7 +78,7 @@ class MemberRepositoryTest {
 
         // When
         Address address = new Address("서울특별시", "서초구 주흥길 23", "06539");
-        member.setAddress(address);
+        member.changeAddress(address);
 
         // Then : Persist Context에 종속된 객체의 값 변경 시 변경 감지로 인한 update문 출력 여부 확인
         entityManager.flush();

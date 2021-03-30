@@ -15,8 +15,7 @@ import static javax.persistence.FetchType.LAZY;
  *  - order_item_tb 테이블과 매핑
  */
 @Entity @Table(name = "order_item_tb")
-@Getter @Setter
-@Builder @NoArgsConstructor @AllArgsConstructor
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id @GeneratedValue
@@ -34,4 +33,68 @@ public class OrderItem {
     private long orderPrice;
 
     private int orderCount;
+
+
+    // * --------------------------------------------------------------
+    // * Header : 도메인 생성
+    // * @author : choi-ys
+    // * @date : 2021/03/30 5:49 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 품목 생성
+     * @apiNote 도메인 생성
+     * @param item 주문 대상 상품
+     * @param orderPrice 주문 상품 금액
+     * @param orderCount 주문 수량
+     */
+    @Builder
+    public OrderItem(Item item, long orderPrice, int orderCount) {
+        this.item = item;
+        this.orderPrice = orderPrice;
+        this.orderCount = orderCount;
+        item.removeStockCount(orderCount);
+    }
+
+
+    // * --------------------------------------------------------------
+    // * Header : 비즈니스 로직
+    // * @author : choi-ys
+    // * @date : 2021/03/30 5:25 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 주문 취소 시, 주문 수량만큼 주문 상품의 재고 원복
+     * @apiNote 비즈니스 로직
+     */
+    public void cancel() {
+        item.addStockCount(orderCount);
+    }
+
+    /**
+     * 품목의 총액
+     * @apiNote 비즈니스 로직
+     * @return 해당 품목 가격*수량
+     */
+    public long getTotalOrderItemPrice() {
+        return orderPrice * orderCount;
+    }
+
+    
+    // * --------------------------------------------------------------
+    // * Header : 양방향 연관관계 객체의 값 설정
+    // * Header : 도메인 생성 로직
+    // * Header : 비즈니스 로직
+    // * @author : choi-ys
+    // * @date : 2021/03/30 8:51 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 품목에 해당하는 주문 정보 설정
+     * @apiNote 양방향 연관관계 객체의 값 설정
+     * @param order 품목의 주문정보
+     */
+    protected void mappingOrder(Order order){
+        this.order = order;
+    }
 }

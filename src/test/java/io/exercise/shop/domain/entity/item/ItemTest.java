@@ -23,17 +23,23 @@ class ItemTest {
         // Given
         String itemName = "자바 ORM 표준 JPA 프로그래밍";
         int itemPrice = 43000;
-        int stockCount = 100;
+        int stockQuantity = 100;
         String author = "김영한";
         String isbn = "9788960777330";
 
         // When
-        Book book = Item.createBook(itemName, itemPrice, stockCount, author, isbn);
+        Book book = Book.builder()
+                .itemName(itemName)
+                .itemPrice(itemPrice)
+                .stockQuantity(stockQuantity)
+                .author(author)
+                .isbn(isbn)
+                .build();
 
         // Then
         assertEquals(book.getItemName(), itemName);
         assertEquals(book.getItemPrice(), itemPrice);
-        assertEquals(book.getStockQuantity(), stockCount);
+        assertEquals(book.getStockQuantity(), stockQuantity);
         assertEquals(book.getAuthor(), author);
         assertEquals(book.getIsbn(), isbn);
     }
@@ -42,7 +48,7 @@ class ItemTest {
     @DisplayName("재고 증가")
     public void addStockCount(){
         // Given
-        Item item = new ItemGenerator().createNewItem();
+        Item item = new ItemGenerator().BuildBook();
         int initialStockCount = item.getStockQuantity();
         int orderQuantity = 5;
 
@@ -57,7 +63,7 @@ class ItemTest {
     @DisplayName("재고 감소")
     public void removeStockCount_NotEnoughStockException(){
         // Given
-        Item item = new ItemGenerator().createNewItem();
+        Item item = new ItemGenerator().BuildBook();
         int initialStockCount = item.getStockQuantity();
         int orderQuantity = 5;
 
@@ -72,7 +78,7 @@ class ItemTest {
     @DisplayName("재고 부족 에외처리")
     public void removeStockCount(){
         // Given
-        Item item = new ItemGenerator().createNewItem();
+        Item item = new ItemGenerator().BuildBook();
         int orderQuantity = 101;
 
         // When
