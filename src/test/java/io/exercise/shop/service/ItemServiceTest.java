@@ -44,7 +44,7 @@ class ItemServiceTest {
     @Rollback(value = false)
     public void saveItem(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.buildBook();
 
         // When
         itemService.saveItem(newItem);
@@ -58,7 +58,7 @@ class ItemServiceTest {
     @Rollback(value = false)
     public void findItem(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.buildBook();
         itemService.saveItem(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
@@ -75,15 +75,15 @@ class ItemServiceTest {
     @Rollback(value = false)
     public void mergeItem(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.buildBook();
         itemService.saveItem(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
         // When
         int updatePrice = 28500;
         int updateStockQuantity = 30;
-        newItem.setItemPrice(updatePrice);
-        newItem.setStockQuantity(updateStockQuantity);
+        newItem.changeItemPrice(updatePrice);
+        newItem.changeStockQuantity(updateStockQuantity);
         itemService.saveItem(newItem);
 
         // Then
@@ -97,9 +97,9 @@ class ItemServiceTest {
     @DisplayName("상품 목록 조회")
     public void findItemList(){
         // Given
-        Item firstItem = itemGenerator.createNewItem();
-        Item secondItem = itemGenerator.createNewItem();
-        Item thirdItem = itemGenerator.createNewItem();
+        Item firstItem = itemGenerator.buildBook();
+        Item secondItem = itemGenerator.buildBook();
+        Item thirdItem = itemGenerator.buildBook();
         itemService.saveItem(firstItem);
         itemService.saveItem(secondItem);
         itemService.saveItem(thirdItem);
@@ -119,7 +119,7 @@ class ItemServiceTest {
     @Rollback(value = false)
     public void deleteItem(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.buildBook();
         itemService.saveItem(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 

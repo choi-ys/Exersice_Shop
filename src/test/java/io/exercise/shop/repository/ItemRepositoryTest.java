@@ -71,7 +71,7 @@ class ItemRepositoryTest {
     @DisplayName("특정 상품 조회")
     public void findByItemNo(){
         // Given
-        Item newItem = itemGenerator.BuildBook();
+        Item newItem = itemGenerator.buildBook();
         itemRepository.save(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
@@ -84,17 +84,18 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품 수정")
+    @Rollback(value = false)
     public void mergeItem(){
         // Given
-        Item newItem = itemGenerator.createNewItem();
+        Item newItem = itemGenerator.buildBook();
         itemRepository.save(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
         // When
         int updatePrice = 22000;
         int updateStockQuantity = 55;
-        newItem.setItemPrice(updatePrice);
-        newItem.setStockQuantity(updateStockQuantity);
+        newItem.changeItemPrice(updatePrice);
+        newItem.changeStockQuantity(updateStockQuantity);
 
         itemRepository.save(newItem);
 
@@ -109,9 +110,9 @@ class ItemRepositoryTest {
     @DisplayName("상품 목록 조회")
     public void findAll(){
         // Given
-        Item firstItem = itemGenerator.BuildBook();
-        Item secondItem = itemGenerator.BuildBook();
-        Item thirdItem = itemGenerator.BuildBook();
+        Item firstItem = itemGenerator.buildBook();
+        Item secondItem = itemGenerator.buildBook();
+        Item thirdItem = itemGenerator.buildBook();
         itemRepository.save(firstItem);
         itemRepository.save(secondItem);
         itemRepository.save(thirdItem);
@@ -135,7 +136,7 @@ class ItemRepositoryTest {
     @Rollback(value = false)
     public void remove(){
         // Given
-        Item newItem = itemGenerator.BuildBook();
+        Item newItem = itemGenerator.buildBook();
         itemRepository.save(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 

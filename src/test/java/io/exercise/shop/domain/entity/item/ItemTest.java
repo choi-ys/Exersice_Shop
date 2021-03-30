@@ -48,7 +48,7 @@ class ItemTest {
     @DisplayName("재고 증가")
     public void addStockCount(){
         // Given
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int initialStockCount = item.getStockQuantity();
         int orderQuantity = 5;
 
@@ -63,7 +63,7 @@ class ItemTest {
     @DisplayName("재고 감소")
     public void removeStockCount_NotEnoughStockException(){
         // Given
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int initialStockCount = item.getStockQuantity();
         int orderQuantity = 5;
 
@@ -78,7 +78,7 @@ class ItemTest {
     @DisplayName("재고 부족 에외처리")
     public void removeStockCount(){
         // Given
-        Item item = new ItemGenerator().BuildBook();
+        Item item = new ItemGenerator().buildBook();
         int orderQuantity = 101;
 
         // When
