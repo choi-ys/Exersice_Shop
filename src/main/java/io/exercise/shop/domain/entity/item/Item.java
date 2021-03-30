@@ -31,7 +31,12 @@ public abstract class Item {
 
     private int stockQuantity;
 
-    // 도서 상품 생성
+    
+    // * --------------------------------------------------------------
+    // * Header : 도메인 생성 부
+    // * @author : choi-ys
+    // * @date : 2021/03/30 2:20 오후
+    // * --------------------------------------------------------------
     public static Book createBook(String itemName, int itemPrice, int stockQuantity, String author, String isbn){
         Book book = new Book();
         book.setItemName(itemName);
@@ -42,12 +47,26 @@ public abstract class Item {
         return book;
     }
 
-    // stock(재고) 증가
+
+    // * --------------------------------------------------------------
+    // * Header : 비즈니스 로직 구현 부
+    // * @author : choi-ys
+    // * @date : 2021/03/30 2:20 오후
+    // * --------------------------------------------------------------
+    
+    /**
+     * stock(재고) 증가
+     * @param quantity 증가할 재고 수량
+     */
     public void addStockCount(int quantity){
         this.stockQuantity += quantity;
     }
 
-    // stock(재고) 감소
+    /**
+     * stock(재고) 감소
+     * @param quantity 감소할 재고 수량
+     * @exception NotEnoughStockException 재고 감소 처리 결과가 음수인 경우
+     */
     public void removeStockCount(int quantity){
         int restStock = this.stockQuantity - quantity;
         if(restStock < 0){
