@@ -1,6 +1,5 @@
-package io.exercise.shop.repository;
+package io.exercise.shop.service;
 
-import io.exercise.shop.domain.entity.item.Book;
 import io.exercise.shop.domain.entity.item.Item;
 import io.exercise.shop.generator.ItemGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +11,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
 
 import java.util.List;
 
@@ -19,58 +19,52 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-
 /**
  * @author : choi-ys
- * @date : 2021/03/30 3:55 오후
- * @Content : 상품 Repository Test Case
+ * @date : 2021/03/30 4:47 오후
+ * @Content : 상품 Service Test Case
  */
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Transactional
-@DisplayName("Repository:ItemRepository")
+@DisplayName("Service:ItemService")
 @Import(ItemGenerator.class)
-class ItemRepositoryTest {
+class ItemServiceTest {
 
     @Resource
     ItemGenerator itemGenerator;
 
     @Autowired
-    ItemRepository itemRepository;
+    EntityManager entityManager;
+
+    @Autowired
+    ItemService itemService;
 
     @Test
-    @DisplayName("상품 저장")
+    @DisplayName("상품 생성")
     @Rollback(value = false)
-    public void save(){
+    public void saveItem(){
         // Given
-        String itemName = "자바 ORM 표준 JPA 프로그래밍";
-        int itemPrice = 43000;
-        int stockCount = 100;
-        String author = "김영한";
-        String isbn = "9788960777330";
+        Item newItem = itemGenerator.createNewItem();
 
         // When
-        Book book = Item.createBook(itemName, itemPrice, stockCount, author, isbn);
-        itemRepository.save(book);
+        itemService.saveItem(newItem);
 
         // Then
-        assertThat(book.getItemNo()).isNotZero();
-        assertEquals(book.getItemName(), itemName);
-        assertEquals(book.getItemPrice(), itemPrice);
-        assertEquals(book.getStockQuantity(), stockCount);
-        assertEquals(book.getAuthor(), author);
-        assertEquals(book.getIsbn(), isbn);
+        assertThat(newItem.getItemNo()).isNotZero();
     }
 
     @Test
-    @DisplayName("특정 상품 조회")
-    public void findByItemNo(){
+    @DisplayName("상품 조회")
+    @Rollback(value = false)
+    public void findItem(){
         // Given
         Item newItem = itemGenerator.createNewItem();
-        itemRepository.save(newItem);
+        itemService.saveItem(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
         // When
-        Item savedItem = itemRepository.findByItemNo(newItem.getItemNo());
+        entityManager.flush();
+        Item savedItem = itemService.findItem(newItem.getItemNo());
 
         // Then
         assertEquals(savedItem, newItem);
@@ -78,22 +72,22 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품 수정")
+    @Rollback(value = false)
     public void mergeItem(){
         // Given
         Item newItem = itemGenerator.createNewItem();
-        itemRepository.save(newItem);
+        itemService.saveItem(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
         // When
-        int updatePrice = 22000;
-        int updateStockQuantity = 55;
+        int updatePrice = 28500;
+        int updateStockQuantity = 30;
         newItem.setItemPrice(updatePrice);
         newItem.setStockQuantity(updateStockQuantity);
-
-        itemRepository.save(newItem);
+        itemService.saveItem(newItem);
 
         // Then
-        Item updatedItem = itemRepository.findByItemNo(newItem.getItemNo());
+        Item updatedItem = itemService.findItem(newItem.getItemNo());
         assertEquals(updatedItem, newItem);
         assertEquals(updatedItem.getItemPrice(), updatePrice);
         assertEquals(updatedItem.getStockQuantity(), updateStockQuantity);
@@ -101,21 +95,17 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품 목록 조회")
-    public void findAll(){
+    public void findItemList(){
         // Given
         Item firstItem = itemGenerator.createNewItem();
         Item secondItem = itemGenerator.createNewItem();
         Item thirdItem = itemGenerator.createNewItem();
-        itemRepository.save(firstItem);
-        itemRepository.save(secondItem);
-        itemRepository.save(thirdItem);
+        itemService.saveItem(firstItem);
+        itemService.saveItem(secondItem);
+        itemService.saveItem(thirdItem);
 
-        assertThat(firstItem.getItemNo()).isNotZero();
-        assertThat(secondItem.getItemNo()).isNotZero();
-        assertThat(thirdItem.getItemNo()).isNotZero();
-        
         // When
-        List<Item> itemList = itemRepository.findAll();
+        List<Item> itemList = itemService.findItemList();
 
         // Then
         assertThat(itemList.size()).isNotZero();
@@ -127,16 +117,16 @@ class ItemRepositoryTest {
     @Test
     @DisplayName("상품 삭제")
     @Rollback(value = false)
-    public void remove(){
+    public void deleteItem(){
         // Given
         Item newItem = itemGenerator.createNewItem();
-        itemRepository.save(newItem);
+        itemService.saveItem(newItem);
         assertThat(newItem.getItemNo()).isNotZero();
 
         // When
-        itemRepository.remove(newItem);
+        itemService.deleteItem(newItem.getItemNo());
 
         // Then
-        assertThat(this.itemRepository.findByItemNo(newItem.getItemNo())).isNull();
+        assertThat(itemService.findItem(newItem.getItemNo())).isNull();
     }
 }
