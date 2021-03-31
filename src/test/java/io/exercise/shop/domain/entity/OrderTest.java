@@ -7,6 +7,9 @@ import io.exercise.shop.generator.MemberGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +23,6 @@ class OrderTest {
 
     @Test
     @DisplayName("신규 주문 생성")
-//    @Rollback(value = false)
     public void createOrder(){
         // Given : 주문 회원 정보
         Member member = new MemberGenerator().buildMember();
@@ -39,14 +41,15 @@ class OrderTest {
                 .orderPrice(item.getItemPrice())
                 .orderCount(orderCount)
                 .build();
-        OrderItem[] orderItems = new OrderItem[]{orderItem};
+        List<OrderItem> orderItemList = new ArrayList<>();
+        orderItemList.add(orderItem);
 
 
         // When : 신규 주문 생성
         Order order = Order.builder()
                 .member(member)
                 .delivery(delivery)
-                .orderItems(orderItems)
+                .orderItemList(orderItemList)
                 .build();
 
         // Then : 양방향 연관관계를 가진 객체의 값 동기화 여부 확인
@@ -79,14 +82,15 @@ class OrderTest {
                 .orderPrice(item.getItemPrice())
                 .orderCount(orderCount)
                 .build();
+        List<OrderItem> orderItemList = new ArrayList<>();
+        orderItemList.add(orderItem);
 
-        OrderItem[] orderItems = new OrderItem[]{orderItem};
 
         // When : 신규 주문 생성
         Order order = Order.builder()
                 .member(member)
                 .delivery(delivery)
-                .orderItems(orderItems)
+                .orderItemList(orderItemList)
                 .build();
 
         // When: 주문 취소
@@ -117,13 +121,14 @@ class OrderTest {
                 .orderPrice(item.getItemPrice())
                 .orderCount(orderCount)
                 .build();
-        OrderItem[] orderItems = new OrderItem[]{orderItem};
+        List<OrderItem> orderItemList = new ArrayList<>();
+        orderItemList.add(orderItem);
 
         // When : 신규 주문 생성
         Order order = Order.builder()
                 .member(member)
                 .delivery(delivery)
-                .orderItems(orderItems)
+                .orderItemList(orderItemList)
                 .build();
 
         // When: 주문 취소
