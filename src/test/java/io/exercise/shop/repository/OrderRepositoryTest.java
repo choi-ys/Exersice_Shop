@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -75,13 +75,14 @@ class OrderRepositoryTest {
                 .orderPrice(item.getItemPrice())
                 .orderCount(orderCount)
                 .build();
-        OrderItem[] orderItems = new OrderItem[]{orderItem};
+        List<OrderItem> orderItemList = new ArrayList<>();
+        orderItemList.add(orderItem);
 
         // When
         Order order = Order.builder()
                 .member(member)
                 .delivery(delivery)
-                .orderItems(orderItems)
+                .orderItemList(orderItemList)
                 .build();
 
         orderRepository.save(order);

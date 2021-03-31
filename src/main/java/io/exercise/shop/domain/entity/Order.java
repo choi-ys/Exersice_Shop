@@ -85,16 +85,16 @@ public class Order {
      * @apiNote 도메인 생성
      * @param member 주문 회원 정보
      * @param delivery 배송 정보
-     * @param orderItems 주문 상품 정보
+     * @param orderItemList 주문 상품 목록 정보
      * @return 신규 주문 정보
      */
     @Builder
-    public Order(Member member, Delivery delivery, OrderItem... orderItems) {
+    public Order(Member member, Delivery delivery, List<OrderItem> orderItemList) {
         this.setMember(member);
         this.setDelivery(delivery);
         this.orderStatus = OrderStatus.ORDER;
         this.orderDate = LocalDateTime.now();
-        for (OrderItem orderItem : orderItems) {
+        for (OrderItem orderItem : orderItemList) {
             this.addOrderItemList(orderItem);
         }
     }
