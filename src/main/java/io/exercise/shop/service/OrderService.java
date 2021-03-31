@@ -78,4 +78,22 @@ public class OrderService {
     public Order findOrder(long orderNo){
         return orderRepository.findByOrderNo(orderNo);
     }
+
+    /**
+     * 주문 완료
+     * @param orderNo
+     */
+    public void completeOrder(long orderNo){
+        Order order = orderRepository.findByOrderNo(orderNo);
+        order.completeOrder();
+    }
+
+    /**
+     * 주문 취소
+     * @param orderNo
+     */
+    public void cancelOrder(long orderNo){
+        Order order = orderRepository.findByOrderNo(orderNo);
+        order.cancel();
+    }
 }

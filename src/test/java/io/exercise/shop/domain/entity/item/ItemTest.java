@@ -19,7 +19,6 @@ class ItemTest {
 
     @Test
     @DisplayName("상품 생성")
-//    @Rollback(value = false)
     public void createBook(){
         // Given
         String itemName = "자바 ORM 표준 JPA 프로그래밍";
@@ -47,7 +46,6 @@ class ItemTest {
 
     @Test
     @DisplayName("재고 증가")
-//    @Rollback(value = false)
     public void addStockCount(){
         // Given
         Item item = new ItemGenerator().buildBook();
@@ -63,7 +61,6 @@ class ItemTest {
 
     @Test
     @DisplayName("재고 감소")
-//    @Rollback(value = false)
     public void removeStockCount_NotEnoughStockException(){
         // Given
         Item item = new ItemGenerator().buildBook();
@@ -79,7 +76,6 @@ class ItemTest {
 
     @Test
     @DisplayName("재고 부족 에외처리")
-//    @Rollback(value = false)
     public void removeStockCount(){
         // Given
         Item item = new ItemGenerator().buildBook();
