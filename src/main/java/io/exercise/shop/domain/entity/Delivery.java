@@ -61,4 +61,19 @@ public class Delivery {
     protected void mappingOrder(Order order){
         this.order = order;
     }
+
+    
+    // * --------------------------------------------------------------
+    // * Header : 비즈니스 로직
+    // * @author : choi-ys
+    // * @date : 2021/03/31 2:20 오후
+    // * --------------------------------------------------------------
+    
+    /**
+     * 완료된 주문 배송정보의 배송상태 변경
+     * @apiNote 비즈니스 로직
+     */
+    protected void completeDelivery(){
+        this.deliveryStatus = DeliveryStatus.COMPLETE;
+    }
 }

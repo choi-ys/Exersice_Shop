@@ -15,7 +15,6 @@ class DeliveryTest {
 
     @Test
     @DisplayName("배송 정보 생성")
-    //    @Rollback(value = false)
     public void createDelivery(){
         // Given
         Address address = new Address("서울 특별시 강남구", "테헤란로 325", "06141");
@@ -26,5 +25,4 @@ class DeliveryTest {
         // Then
         assertEquals(delivery.getDeliveryStatus(), DeliveryStatus.READY);
     }
-
 }

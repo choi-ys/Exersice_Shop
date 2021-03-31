@@ -136,4 +136,12 @@ public class Order {
         }
         return totalPrice;
     }
+
+    /**
+     * 주문 완료
+     * @apiNote 비즈니스 로직
+     */
+    public void completeOrder(){
+        this.delivery.completeDelivery();
+    }
 }
