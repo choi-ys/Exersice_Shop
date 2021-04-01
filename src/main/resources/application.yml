@@ -16,6 +16,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop # create auto ddl script 옵션 create-drop : application 기동 시점에 Entity를 기준으로 Table Create 후 Application 종료 시점에 Drop
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
 #    properties:
 #      hibernate:
 #        show_sql: true
