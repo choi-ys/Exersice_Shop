@@ -1,7 +1,6 @@
 package io.exercise.shop.controller;
 
 import io.exercise.shop.domain.entity.Order;
-import io.exercise.shop.domain.entity.OrderItem;
 import io.exercise.shop.service.query.OrderQueryIssueSolutionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +28,6 @@ public class OrderQueryIssueController {
      */
     @GetMapping(value = "/v1")
     public List<Order> getOrderListV1(){
-        List<Order> allOrder = orderQueryIssueSolutionService.findAllOrder();
-        for (Order order : allOrder) {
-            order.getMember().getMemberName();
-            order.getDelivery().getDeliveryStatus();
-            for (OrderItem orderItem : order.getOrderItemList()) {
-                orderItem.getItem().getItemName();
-                orderItem.getOrderPrice();
-            }
-        }
-        return allOrder;
+        return orderQueryIssueSolutionService.findAllOrder();
     }
 }
