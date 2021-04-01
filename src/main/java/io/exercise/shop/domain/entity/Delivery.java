@@ -16,10 +16,16 @@ import static javax.persistence.FetchType.LAZY;
  * @Content : 배송지 정보를 표현하는 Entity, delivery_tb 테이블과 매핑
  */
 @Entity @Table(name = "delivery_tb")
+@SequenceGenerator(
+        name = "SEQUENCE_DELIVERY_ENTITY_SEQ_GENERATOR"
+        , sequenceName = "SEQUENCE_DELIVERY_ENTITY_SEQ"
+        , initialValue = 1
+        , allocationSize = 1
+)
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(generator = "SEQUENCE_DELIVERY_ENTITY_SEQ_GENERATOR")
     @Column(name = "delivery_no")
     private Long deliveryNo;
 

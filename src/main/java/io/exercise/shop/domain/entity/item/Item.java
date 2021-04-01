@@ -1,7 +1,10 @@
 package io.exercise.shop.domain.entity.item;
 
 import io.exercise.shop.exception.NotEnoughStockException;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,10 +17,17 @@ import java.util.List;
  */
 @Entity @Table(name = "item_tb")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) @DiscriminatorColumn(name = "d_type")
+@SequenceGenerator(
+        name = "SEQUENCE_ITEM_ENTITY_SEQ_GENERATOR"
+        , sequenceName = "SEQUENCE_ITEM_ENTITY_SEQ"
+        , initialValue = 1
+        , allocationSize = 1
+)
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public abstract class Item {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(generator = "SEQUENCE_ITEM_ENTITY_SEQ_GENERATOR")
     @Column(name = "item_no")
     private Long itemNo;
 

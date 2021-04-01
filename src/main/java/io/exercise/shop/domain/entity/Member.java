@@ -18,10 +18,16 @@ import static javax.persistence.FetchType.LAZY;
  * @Content : 회원을 표현하는 Entity, member_tb 테이블과 매핑
  */
 @Entity @Table(name = "member_tb")
+@SequenceGenerator(
+        name = "SEQUENCE_MEMBER_ENTITY_SEQ_GENERATOR"
+        , sequenceName = "SEQUENCE_MEMBER_ENTITY_SEQ"
+        , initialValue = 1
+        , allocationSize = 1
+)
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(generator = "SEQUENCE_MEMBER_ENTITY_SEQ_GENERATOR")
     @Column(name = "member_no")
     private Long memberNo;
 
