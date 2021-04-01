@@ -1,22 +1,13 @@
 package io.exercise.shop.controller;
 
-import io.exercise.shop.domain.entity.Member;
-import io.exercise.shop.domain.entity.item.Item;
-import io.exercise.shop.generator.ItemGenerator;
-import io.exercise.shop.generator.MemberGenerator;
-import io.exercise.shop.service.OrderService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.util.List;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -26,42 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
-@Transactional
 @DisplayName("API:OrderQueryIssueSolution")
+@Sql({"/order.sql"})
 class OrderQueryIssueControllerTest {
 
-    @Autowired OrderService orderService;
-    @Autowired EntityManager entityManager;
     @Autowired MockMvc mockMvc;
-
-    /** GenericType saveAll */
-    private <T> void saveAll(List<T> paramList){
-        for (T param : paramList) {
-            entityManager.persist(param);
-        }
-        entityManager.flush();
-    }
-
-    /**
-     * 회원 생성 & 상품 생성
-     * 주문 생성
-     */
-    @BeforeEach
-    @DisplayName("Test 수행에 필요한 주문 정보 생성")
-    public void setUp(){
-        List<Member> memberList = new MemberGenerator().generateMemberList();
-        this.saveAll(memberList);
-
-        List<Item> itemList = new ItemGenerator().generateItemList();
-        this.saveAll(itemList);
-
-        for (int i = 0; i < memberList.size(); i++) {
-            orderService.saveOrder(memberList.get(i).getMemberNo(), itemList.get(i).getItemNo(), (i+1));
-        }
-        entityManager.flush();
-        entityManager.clear();
-    }
-
 
     /**
      * API에서 Entity를 직접 반환하는 경우 발생하는 3가지 이슈
@@ -72,6 +32,10 @@ class OrderQueryIssueControllerTest {
      *   - 해결 :
      *     1. 초기화 되지 않은 프록시 객체를 LazyLoading을 이용하여 초기화 하여 직렬화 대상에 포함.
      *     2. @JsonIgnore를 이용하여 초기화 되지 않은 프록시 객체를 직렬화 대상에서 제외.
+     *
+     *   - 비고 : Hibernate5Module 의존성 없이는 LazyLoading된 Entity객체는 프록시 상태로 남아
+     *            Jackson 라이브러리의 직렬화 과정에서 오류가 발생한다.
+     *            즉, LazyLoading을 이용하여 프록시를 초기화 하여도 오류 발생
      *
      *  - 이슈 2 : 반환하는 Entity가 양방향 연관관계를 가지는 경우
      *    - 응답 반환 시 객체를 반환하기 위해 직렬화 하는 과정에서

@@ -13,10 +13,16 @@ import java.util.List;
  * @Content : 주문을 표현하는 Entity, order_tb 테이블과 매핑
  */
 @Entity @Table(name = "order_tb")
+@SequenceGenerator(
+        name = "SEQUENCE_ORDER_ENTITY_SEQ_GENERATOR"
+        , sequenceName = "SEQUENCE_ORDER_ENTITY_SEQ"
+        , initialValue = 1
+        , allocationSize = 1
+)
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(generator = "SEQUENCE_MEMBER_ENTITY_SEQ_GENERATOR")
     @Column(name = "order_no")
     private Long orderNo;
 

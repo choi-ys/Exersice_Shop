@@ -16,10 +16,16 @@ import static javax.persistence.FetchType.LAZY;
  *  - order_item_tb 테이블과 매핑
  */
 @Entity @Table(name = "order_item_tb")
+@SequenceGenerator(
+        name = "SEQUENCE_ORDER_ITEM_ENTITY_SEQ_GENERATOR"
+        , sequenceName = "SEQUENCE_ORDER_ITEM_ENTITY_SEQ"
+        , initialValue = 1
+        , allocationSize = 1
+)
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(generator = "SEQUENCE_ORDER_ITEM_ENTITY_SEQ_GENERATOR")
     @Column(name = "order_item_no")
     private Long orderItemNo;
 
