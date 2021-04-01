@@ -58,7 +58,3 @@
 -- update item_tb set item_name='Clean Code', item_price=43000, stock_quantity=170, author='김영한', isbn='9788960777330' where item_no=5;
 -- update item_tb set item_name='Clean Architecture', item_price=43000, stock_quantity=294, author='김영한', isbn='9788960777330' where item_no=6;
 -- update item_tb set item_name='Building Microservices', item_price=43000, stock_quantity=108, author='김영한', isbn='9788960777330' where item_no=7;
---
---
---
---

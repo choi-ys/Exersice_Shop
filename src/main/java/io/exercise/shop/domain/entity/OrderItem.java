@@ -1,8 +1,10 @@
 package io.exercise.shop.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.exercise.shop.domain.entity.item.Item;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -29,13 +31,6 @@ public class OrderItem {
     @Column(name = "order_item_no")
     private Long orderItemNo;
 
-    /**
-     * @JsonIgnore를 명시한 이유
-     * 양방향 연관관계를 가진 Entity를 직접 반환하는 경우
-     * 객체 직렬화 시 상호 참조로 인해 발생하는 무한 루프를 방지 하기 위해
-     * 한쪽에 @JsonIgnore를 명시하여 직렬화 과정에서 발생하는 무한루프를 방지
-     */
-    @JsonIgnore
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_no")
     private Order order;
