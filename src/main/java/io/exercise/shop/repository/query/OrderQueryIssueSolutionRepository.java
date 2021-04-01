@@ -17,4 +17,15 @@ public class OrderQueryIssueSolutionRepository {
         return entityManager.createQuery("select o from Order as o")
                 .getResultList();
     }
+
+    /**
+     * Entity 조회 시 N:1, 1:1의 관계를 FETCH JOIN으로 조회
+     * @return
+     */
+    public List<Order> findByFetchJoin(){
+        return entityManager.createQuery("select o from Order as o" +
+                " join fetch o.member as m" +
+                " join fetch o.delivery as d")
+                .getResultList();
+    }
 }

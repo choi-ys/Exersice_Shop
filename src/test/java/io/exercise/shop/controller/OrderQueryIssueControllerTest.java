@@ -6,6 +6,7 @@ import io.exercise.shop.generator.ItemGenerator;
 import io.exercise.shop.generator.MemberGenerator;
 import io.exercise.shop.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,7 @@ class OrderQueryIssueControllerTest {
      */
     @Test
     @DisplayName("V1:Entity 직접 반환으로 인한 이슈")
+    @Disabled
     public void getOrderListV1() throws Exception {
         // Given
         String urlTemplate = "/api/order/v1";
@@ -109,5 +111,29 @@ class OrderQueryIssueControllerTest {
         resultActions.andDo(print())
                 .andExpect(status().isOk())
                 ;
+    }
+
+    /**
+     * 1:1, N:1의 관계를 JOIN FETCH로 조회 후,
+     * 1:N 관계는 default_batch_fetch_size옵션을 적용하여
+     * LazyLoading시점에 IN절로 조회 하여 실행 쿼리 수 최적화
+     * @throws Exception
+     */
+    @Test
+    @DisplayName("V2:Entity를 DTO로 변환하여 반환")
+    public void getOrderListV2() throws Exception {
+        // Given
+        String urlTemplate = "/api/order/v2";
+
+        // When
+        ResultActions resultActions = this.mockMvc.perform(get(urlTemplate)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+        );
+
+        // Then
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+        ;
     }
 }

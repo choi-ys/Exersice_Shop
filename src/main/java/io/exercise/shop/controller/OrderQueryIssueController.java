@@ -1,5 +1,6 @@
 package io.exercise.shop.controller;
 
+import io.exercise.shop.domain.dto.response.OrderDtoWrap;
 import io.exercise.shop.domain.entity.Order;
 import io.exercise.shop.service.query.OrderQueryIssueSolutionService;
 import lombok.RequiredArgsConstructor;
@@ -30,4 +31,15 @@ public class OrderQueryIssueController {
     public List<Order> getOrderListV1(){
         return orderQueryIssueSolutionService.findAllOrder();
     }
+
+    /**
+     * N:1, 1:1의 관계를 fetch join으로,
+     * 1:N의 관계는 default_batch_fetch_size 설정을 이용하여 쿼리 최적화
+     * @return
+     */
+    @GetMapping(value = "/v2")
+    public OrderDtoWrap getOrderListV2(){
+        return orderQueryIssueSolutionService.findAllOrderAndMemberAndDelivery();
+    }
+
 }
